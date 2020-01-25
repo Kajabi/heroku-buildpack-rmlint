@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# bin/detect <build-dir>
+
+set -eo pipefail
+
+source "$(dirname $0)/support/environment.sh"
+
+if [ -f "$BUILD_DIR/.heroku/rmlint.sh" ]; then
+  echo "rmlint" && exit 0
+else
+  echo "no" && exit 1
+fi

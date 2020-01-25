@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+BUILDPACK_DIR=`cd $(dirname $0)/../..; pwd -P`
+
+docker build -t rmlint-buildpack-test $BUILDPACK_DIR
+docker run -a stderr -it --rm --name=rmlint-buildpack-test rmlint-buildpack-test

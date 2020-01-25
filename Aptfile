@@ -1,0 +1,14 @@
+# Required dependencies for rmlint
+build-essential
+gettext
+git
+python3-nose
+python3-sphinx
+scons
+
+# Optional dependencies for optional features
+libblkid-dev
+libelf-dev
+libglib2.0-dev
+libjson-glib-1.0
+libjson-glib-dev

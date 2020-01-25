@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Heroku's buildpack API expects that bin/test will run tests for Heroku CI, so
+# we have to hide install bin/support since these are just the buildpack's
+# tests
+
+set -eo pipefail
+
+BUILDPACK_DIR=`cd $(dirname $0)/../..; pwd -P`
+
+mkdir -p tmp
+curl --silent https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/shunit2/shunit2-2.1.6.tgz | tar xz -C tmp/
+
+if ! [ -d tmp/testrunner ]; then
+  git clone https://github.com/heroku/heroku-buildpack-testrunner.git tmp/testrunner --quiet
+else
+  git -C tmp/testrunner pull origin master --quiet
+fi
+
+export SHUNIT_HOME="$BUILDPACK_DIR/tmp/shunit2-2.1.6"
+tmp/testrunner/bin/run -c $BUILDPACK_DIR
